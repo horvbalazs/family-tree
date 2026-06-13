@@ -7,13 +7,13 @@ export class CreatePersonDto {
   gender: Gender = Gender.Male;
 
   @ApiProperty({ example: 'John' })
-  firstName: string = 'John';
+  firstName = 'John';
 
   @ApiProperty({ example: 'Doe' })
-  lastName: string = 'Doe';
+  lastName = 'Doe';
 
   @ApiProperty({ example: '1993-01-01' })
-  birthDate: string = '1993-01-01';
+  birthDate = '1993-01-01';
 
   @ApiPropertyOptional({ example: '2020-01-01' })
   deathDate?: string;

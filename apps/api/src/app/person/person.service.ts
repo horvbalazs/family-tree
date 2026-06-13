@@ -122,7 +122,7 @@ export class PersonService {
       )
       .toList();
 
-    return result.map((v: any) => this.mapVertexToPerson(v));
+    return result.map((v: unknown) => this.mapVertexToPerson(v as Map<unknown, unknown>));
   }
 
   async findByIdWithParents(
@@ -187,7 +187,7 @@ export class PersonService {
       .elementMap()
       .toList();
 
-    return results.map((vertex: any) => this.mapVertexToPerson(vertex));
+    return results.map((vertex: unknown) => this.mapVertexToPerson(vertex as Map<unknown, unknown>));
   }
 
   private async linkMother(childId: string, motherId?: string) {
@@ -285,7 +285,7 @@ export class PersonService {
     }
 
     if (parent.birthDate >= child.birthDate) {
-      throw new InternalServerErrorException('Parent\s birth date cannot be later than the child\s.');
+      throw new InternalServerErrorException('Parent\'s birth date cannot be later than the child\'s.');
     }
 
     if (parent.gender !== expectedGender) {
