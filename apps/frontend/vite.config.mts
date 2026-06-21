@@ -16,10 +16,10 @@ export default defineConfig(() => ({
   },
   plugins: [
     // Please make sure that '@tanstack/router-plugin' is passed before '@vitejs/plugin-react'
-    // tanstackRouter({
-    //   target: 'react',
-    //   autoCodeSplitting: true,
-    // }),
+    tanstackRouter({
+      target: 'react',
+      autoCodeSplitting: true,
+    }),
     react()
   ],
   // Uncomment this if you are using workers.

@@ -40,3 +40,10 @@ export const deletePersonById = () => {
 
   return { isPending, error, deletePerson: mutate }
 }
+
+export const useUploadFile = () => {
+  const { apiUrl } = useAppConfig();
+  const { isPending, error, mutate } = useMutation({ mutationFn: (id: string) => fetch(`${apiUrl}/person/${id}`, { method: 'DELETE' }) });
+
+  return { isPending, error, uploadFile: mutate }
+}

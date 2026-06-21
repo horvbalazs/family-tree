@@ -5,11 +5,13 @@
 
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { join } from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const globalPrefix = 'api';
 
   const config = new DocumentBuilder()
@@ -22,6 +24,10 @@ async function bootstrap() {
 
   SwaggerModule.setup('docs', app, document, {
     jsonDocumentUrl: 'docs-json',
+  });
+
+  app.useStaticAssets(join(process.cwd(), 'uploads'), {
+    prefix: '/uploads/',
   });
 
   app.setGlobalPrefix(globalPrefix);

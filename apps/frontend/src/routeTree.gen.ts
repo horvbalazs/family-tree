@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-// @ts-nocheck aa
+// @ts-nocheck
 
 // noinspection JSUnusedGlobalSymbols
 
@@ -8,35 +8,60 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router'
+
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AddPersonIndexRouteImport } from './routes/add-person/index'
+
+const EditPersonIdLazyRouteImport = createFileRoute('/edit-person/$id')()
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AddPersonIndexRoute = AddPersonIndexRouteImport.update({
+  id: '/add-person/',
+  path: '/add-person/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EditPersonIdLazyRoute = EditPersonIdLazyRouteImport.update({
+  id: '/edit-person/$id',
+  path: '/edit-person/$id',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() =>
+  import('./routes/edit-person/$id.lazy').then((d) => d.Route),
+)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/edit-person/$id': typeof EditPersonIdLazyRoute
+  '/add-person/': typeof AddPersonIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/edit-person/$id': typeof EditPersonIdLazyRoute
+  '/add-person': typeof AddPersonIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/edit-person/$id': typeof EditPersonIdLazyRoute
+  '/add-person/': typeof AddPersonIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/edit-person/$id' | '/add-person/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/edit-person/$id' | '/add-person'
+  id: '__root__' | '/' | '/edit-person/$id' | '/add-person/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EditPersonIdLazyRoute: typeof EditPersonIdLazyRoute
+  AddPersonIndexRoute: typeof AddPersonIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +73,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/add-person/': {
+      id: '/add-person/'
+      path: '/add-person'
+      fullPath: '/add-person/'
+      preLoaderRoute: typeof AddPersonIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/edit-person/$id': {
+      id: '/edit-person/$id'
+      path: '/edit-person/$id'
+      fullPath: '/edit-person/$id'
+      preLoaderRoute: typeof EditPersonIdLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EditPersonIdLazyRoute: EditPersonIdLazyRoute,
+  AddPersonIndexRoute: AddPersonIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

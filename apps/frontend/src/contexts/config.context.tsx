@@ -13,7 +13,7 @@ const AppConfigContext = createContext<AppConfig | undefined>(undefined);
 export const AppConfigProvider: FC<PropsWithChildren> = ({ children }) => {
   const { isPending, error, data } = useQuery({
     queryKey: ['appConfig'],
-    queryFn: () => fetch('./assets/config.json').then(res => res.json())
+    queryFn: () => fetch('./config.json').then(res => res.json())
   })
 
   if (isPending) {
