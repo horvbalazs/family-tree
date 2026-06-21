@@ -1,6 +1,6 @@
 // person.dto.ts
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Gender, PersonFilter, UpsertPersonRequest } from './person.types';
+import { Gender, PersonFilter, UpsertPersonRequest } from '@org/shared-types';
 
 export class CreatePersonDto {
   @ApiProperty({ enum: Gender })

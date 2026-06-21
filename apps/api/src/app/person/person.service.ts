@@ -1,5 +1,5 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
-import { Gender, Person, PersonFilter, PersonWithParents, UpsertPersonRequest } from './person.types';
+import { Gender, Person, PersonFilter, PersonWithParents, UpsertPersonRequest } from '@org/shared-types';
 import { GremlinService } from '@org/graph';
 import { v4 as uuid } from 'uuid';
 import { process as gremlinProcess } from 'gremlin';
